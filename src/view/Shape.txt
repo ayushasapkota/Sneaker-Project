@@ -1,0 +1,419 @@
+Practice Question of the Test 
+
+Question 1: Create a program with these parts:
+ 1. Shape class - has a method called area() 
+2. Three shape types: o Circle (needs radius) o Rectangle (needs length and width) o Triangle (needs base and height)
+ 3. ShapeFactory class - creates the right shape based on what you ask for Each shape should calculate its own area when you call area().
+
+abstract class Shape {
+    abstract double area();
+}
+
+class Circle extends Shape {
+    double r;
+    Circle(double r) { this.r = r; }
+    double area() { return Math.PI * r * r; }
+}
+
+class Rectangle extends Shape {
+    double l, w;
+    Rectangle(double l, double w) { this.l = l; this.w = w; }
+    double area() { return l * w; }
+}
+
+class Triangle extends Shape {
+    double b, h;
+    Triangle(double b, double h) { this.b = b; this.h = h; }
+    double area() { return 0.5 * b * h; }
+}
+
+class ShapeFactory {
+    Shape get(String t, double... a) {
+        if (t.equals("circle")) return new Circle(a[0]);
+        if (t.equals("rectangle")) return new Rectangle(a[0], a[1]);
+        if (t.equals("triangle")) return new Triangle(a[0], a[1]);
+        return null;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        ShapeFactory s = new ShapeFactory();
+        System.out.println(s.get("circle", 5).area());
+        System.out.println(s.get("rectangle", 4, 6).area());
+        System.out.println(s.get("triangle", 3, 8).area());
+    }
+}
+
+
+ Question 2 Create an Employee class that has the following requirements: A constructor that initializes an employee name and age. A constructor that initializes an employee name, age, and grade. Implement a method displayEmployeeInfo() that prints the employee name, age, and grade. Ensure that if only the name and age are provided, the grade should be set to "Not Assigned". Additionally, create a Main class that tests the different constructors.
+ 
+class Employee {
+    String name;
+    int age;
+    String grade;
+
+    Employee(String name, int age) {
+        this.name = name;
+        this.age = age;
+        this.grade = "Not Assigned";
+    }
+
+    Employee(String name, int age, String grade) {
+        this.name = name;
+        this.age = age;
+        this.grade = grade;
+    }
+
+    void displayEmployeeInfo() {
+        System.out.println("Name: " + name + ", Age: " + age + ", Grade: " + grade);
+    }
+}
+
+public class MainEmployee {
+    public static void main(String[] args) {
+        Employee e1 = new Employee("Ayusha", 16);
+        Employee e2 = new Employee("Riya", 17, "A");
+        e1.displayEmployeeInfo();
+        e2.displayEmployeeInfo();
+    }
+}
+
+
+Question 3: Design and implement a Stack data structure in Java that supports five core operations: adding elements to the top, removing and retrieving the top element, viewing the top element without removal, checking if the stack is empty, and obtaining the current number of elements. 
+  class MyStack {
+    int[] stack;
+    int top;
+
+    MyStack(int size) { stack = new int[size]; top = -1; }
+
+    void push(int value) {
+        if(top < stack.length - 1) stack[++top] = value;
+        else System.out.println("Stack Overflow");
+    }
+
+    int pop() {
+        if(top >= 0) return stack[top--];
+        else { System.out.println("Stack Underflow"); return -1; }
+    }
+
+    int peek() {
+        if(top >= 0) return stack[top];
+        else return -1;
+    }
+
+    boolean isEmpty() { return top == -1; }
+
+    int size() { return top + 1; }
+}
+
+public class MainStack {
+    public static void main(String[] args) {
+        MyStack st = new MyStack(5);
+        st.push(10); st.push(20);
+        System.out.println("Top: " + st.peek());
+        st.pop();
+        System.out.println("Size: " + st.size());
+    }
+}
+
+
+Question 4: Write a Java program that calculates the sum of integers from 1 to a given positive non-zero integer, n. The program should prompt the user to input a number and then compute the sum of all integers from 1 to n. After displaying the result, the program should ask the user whether they would like to continue entering more numbers and calculating the sum. The program should keep running as long as the user chooses to continue. If the user chooses to exit, the program should display a closing message and terminate.
+ 1. Use a do-while loop to repeatedly prompt the user to enter a positive non-zero integer. 
+2. For each input, calculate the sum of integers from 1 to the entered number (n). 
+3. After each sum calculation, ask the user whether they want to continue. 
+4. If the user enters 'y', the program continues. If the user enters any other character, the program stops. 
+5. Include input validation to ensure that the user enters only valid positive integers and that they enter 'y' or any other character to decide whether to continue. 
+
+import java.util.Scanner;
+
+public class SumNumbers {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        char choice;
+        do {
+            System.out.print("Enter positive number: ");
+            int n = sc.nextInt();
+            if(n <= 0) { System.out.println("Invalid input"); continue; }
+            int sum = 0;
+            for(int i=1; i<=n; i++) sum += i;
+            System.out.println("Sum = " + sum);
+            System.out.print("Continue? (y/n): ");
+            choice = sc.next().charAt(0);
+        } while(choice == 'y' || choice == 'Y');
+        System.out.println("Thank you!");
+    }
+}
+
+Question 5: Create a Java program that asks the user for a positive integer, then displays all even numbers from 1 up to that number on a single line, separated by spaces.
+
+import java.util.Scanner;
+
+public class EvenNumbers {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter positive number: ");
+        int n = sc.nextInt();
+        for(int i=2; i<=n; i+=2) System.out.print(i + " ");
+        System.out.println();
+    }
+}
+
+
+ Question 6: Implement a Java solution that accepts user input for a positive integer n and outputs a classification of each integer from 1 to n inclusive, marking each as "Even" or "Odd" based on divisibility by 2.
+ 
+import java.util.Scanner;
+
+public class EvenOdd {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter positive number: ");
+        int n = sc.nextInt();
+        for(int i=1; i<=n; i++) {
+            if(i % 2 == 0) System.out.println(i + " Even");
+            else System.out.println(i + " Odd");
+        }
+    }
+}
+
+Question 7: You are designing an app. Create a class called "MethodOverloadingCal" with the following overloaded methods: a) int addition(int a, int b) . b) double addition(double a, double b) c) int addition(int a, int b, int c) 
+
+class MethodOverloadingCal {
+    int addition(int a, int b) { return a + b; }
+    double addition(double a, double b) { return a + b; }
+    int addition(int a, int b, int c) { return a + b + c; }
+}
+
+public class MainCal {
+    public static void main(String[] args) {
+        MethodOverloadingCal calc = new MethodOverloadingCal();
+        System.out.println(calc.addition(2,3));
+        System.out.println(calc.addition(2.5,3.5));
+        System.out.println(calc.addition(1,2,3));
+    }
+}
+
+
+Question 8: Design a Java payment system using interfaces. Create a PaymentMethod interface with processPayment() and getTransactionDetails() methods. Implement it in CreditCardPayment and PayPalPayment classes. Add a PaymentProcessor class to handle payments, and demonstrate both payment types in a Main class.
+
+interface PaymentMethod {
+    void processPayment(double amount);
+    String getTransactionDetails();
+}
+
+class CreditCardPayment implements PaymentMethod {
+    public void processPayment(double amount) { System.out.println("Paid $" + amount + " via Credit Card"); }
+    public String getTransactionDetails() { return "Credit Card Payment"; }
+}
+
+class PayPalPayment implements PaymentMethod {
+    public void processPayment(double amount) { System.out.println("Paid $" + amount + " via PayPal"); }
+    public String getTransactionDetails() { return "PayPal Payment"; }
+}
+
+class PaymentProcessor {
+    void pay(PaymentMethod pm, double amount) { pm.processPayment(amount); }
+}
+
+public class MainPayment {
+    public static void main(String[] args) {
+        PaymentProcessor processor = new PaymentProcessor();
+        processor.pay(new CreditCardPayment(), 100);
+        processor.pay(new PayPalPayment(), 50);
+    }
+}
+
+
+
+
+ Question 9: Write a Java program to model a Bank Account with encapsulation. The BankAccount class should have: · Private attributes: o accountNumber (String) o accountHolder (String) o balance (double) · Public methods: o deposit(double amount): Adds money to the balance. o withdraw(double amount): Subtracts money from the balance if there are sufficient funds. o displayInfo(): Displays account details. · Getters and Setters: Provide public getter and setter methods to access and modify the attributes. 
+
+class BankAccount {
+    private String accountNumber;
+    private String accountHolder;
+    private double balance;
+
+    public BankAccount(String accountNumber, String accountHolder, double balance) {
+        this.accountNumber = accountNumber;
+        this.accountHolder = accountHolder;
+        this.balance = balance;
+    }
+
+    public void deposit(double amount) { balance += amount; }
+    public void withdraw(double amount) { 
+        if(amount <= balance) balance -= amount; 
+        else System.out.println("Insufficient funds");
+    }
+
+    public void displayInfo() {
+        System.out.println("Account: " + accountNumber + ", Holder: " + accountHolder + ", Balance: $" + balance);
+    }
+
+    // Getters & Setters
+    public String getAccountNumber() { return accountNumber; }
+    public void setAccountNumber(String accountNumber) { this.accountNumber = accountNumber; }
+    public String getAccountHolder() { return accountHolder; }
+    public void setAccountHolder(String accountHolder) { this.accountHolder = accountHolder; }
+    public double getBalance() { return balance; }
+    public void setBalance(double balance) { this.balance = balance; }
+}
+
+public class MainBank {
+    public static void main(String[] args) {
+        BankAccount acc = new BankAccount("12345", "Ayusha", 1000);
+        acc.deposit(500);
+        acc.withdraw(200);
+        acc.displayInfo();
+    }
+}
+
+
+
+Question 10: Create a Java application that manages a simple library system. Implement a Book class with attributes like bookId, title, author, and availableCopies. Write methods to: Add new books to the library. Borrow a book (reduce the number of available copies). Return a book (increase the number of available copies). Implement a system where users can borrow and return books, ensuring that a book cannot be borrowed if no copies are available
+
+class Book {
+    int bookId;
+    String title;
+    String author;
+    int availableCopies;
+
+    Book(int bookId, String title, String author, int copies) {
+        this.bookId = bookId; this.title = title; this.author = author; this.availableCopies = copies;
+    }
+
+    void borrowBook() {
+        if(availableCopies > 0) { availableCopies--; System.out.println("Borrowed " + title); }
+        else System.out.println("No copies available");
+    }
+
+    void returnBook() { availableCopies++; System.out.println("Returned " + title); }
+
+    void display() { System.out.println(title + " by " + author + " | Copies: " + availableCopies); }
+}
+
+public class MainLibrary {
+    public static void main(String[] args) {
+        Book b1 = new Book(1, "Java Basics", "Author A", 2);
+        b1.display();
+        b1.borrowBook();
+        b1.borrowBook();
+        b1.borrowBook(); // Should show no copies
+        b1.returnBook();
+        b1.display();
+    }
+}
+ 
+
+Change method from ad pop-up menu pop-up to add Jayfield pop-up
+
+class Popup {
+
+    void showPopup() {
+        System.out.println("Jayfield Pop-up Displayed");
+    }
+
+    public static void main(String[] args) {
+        Popup p = new Popup();
+        p.showPopup();
+    }
+}
+
+
+
+Task: Write a Java program using nested switch statements to display remarks based on student grade and marks.
+import java.util.Scanner;
+
+public class StudentRemarks {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter grade (A/B/C): ");
+        char grade = sc.next().charAt(0);
+
+        System.out.print("Enter marks: ");
+        int marks = sc.nextInt();
+
+        switch (grade) {
+            case 'A':
+                switch (marks / 10) {
+                    case 9:
+                    case 10:
+                        System.out.println("Excellent");
+                        break;
+                    case 8:
+                        System.out.println("Very Good");
+                        break;
+                    default:
+                        System.out.println("Good");
+                }
+                break;
+
+            case 'B':
+                switch (marks / 10) {
+                    case 7:
+                        System.out.println("Good");
+                        break;
+                    case 6:
+                        System.out.println("Average");
+                        break;
+                    default:
+                        System.out.println("Needs Improvement");
+                }
+                break;
+
+            case 'C':
+                System.out.println("Poor Performance");
+                break;
+
+            default:
+                System.out.println("Invalid Grade");
+        }
+    }
+}
+
+
+Create an interface named notification the subclasses to be email notifications sms notifications and push notifications with the send ().
+
+
+// Interface
+interface Notification {
+    void send();
+}
+
+// Email notification
+class EmailNotification implements Notification {
+    public void send() {
+        System.out.println("Email sent!");
+    }
+}
+
+// SMS notification
+class SMSNotification implements Notification {
+    public void send() {
+        System.out.println("SMS sent!");
+    }
+}
+
+// Push notification
+class PushNotification implements Notification {
+    public void send() {
+        System.out.println("Push notification sent!");
+    }
+}
+
+// Main class
+public class NotificationDemo {
+    public static void main(String[] args) {
+        Notification[] notifications = {
+            new EmailNotification(),
+            new SMSNotification(),
+            new PushNotification()
+        };
+
+        for (Notification n : notifications) {
+            n.send();
+        }
+    }
+}
+
+
